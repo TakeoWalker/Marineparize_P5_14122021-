@@ -26,20 +26,6 @@ const email = document.getElementById("email");
 const emailErrorMsg = document.getElementById("emailErrorMsg");
 const order = document.querySelector(".cart__order__form");
 
-// Variable qui met en place les info à envoyer au serveur
-let contactInfo = {
-  contact: {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    address: address.value,
-    city: city.value,
-    email: email.value,
-  },
-  products: productsArray.map((product) => {
-    return product.id;
-  }),
-};
-
 searchProducts();
 
 /******************** Fonctions ********************/
@@ -325,7 +311,7 @@ function send(path, data) {
     })
       .then((res) => res.json())
       .then((response) => {
-        window.location.href = `${window.location.origin}/html/confirmation.html?orderId=${response.orderId}`;
+        window.location.href = `${window.location.origin}/front/html/confirmation.html?orderId=${response.orderId}`;
       });
   }
 }
@@ -349,5 +335,16 @@ email.addEventListener("change", function () {
 // Evenement quand on clique sur "Commander !" ou en appuyant sur la touche "Entrée"
 order.addEventListener("submit", (e) => {
   e.preventDefault();
-  send("http://localhost:3000/api/products/order", contactInfo);
+  send("http://localhost:3000/api/products/order", {
+    contact: {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    },
+    products: productsArray.map((product) => {
+      return product.id;
+    }),
+  });
 });
