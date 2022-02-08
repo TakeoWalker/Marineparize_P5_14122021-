@@ -311,7 +311,7 @@ function send(path, data) {
     })
       .then((res) => res.json())
       .then((response) => {
-        window.location.href = `${window.location.origin}/front/html/confirmation.html?orderId=${response.orderId}`;
+        window.location.href = `confirmation.html?orderId=${response.orderId}`;
       });
   }
 }
